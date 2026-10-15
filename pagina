@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anime Reaction</title>
+  <style>
+    body {
+      margin: 0;
+      background: #101014;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      padding: 22px 5%;
+      background: #1b1b23;
+      border-bottom: 1px solid #333;
+    }
+    main {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+    video {
+      width: 100%;
+      background: black;
+      border-radius: 12px;
+    }
+    select {
+      padding: 12px;
+      background: #252530;
+      color: white;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    p { color: #b6b6c5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>ANIME REACTION</h2>
+  </header>
+
+  <main>
+    <h1>Ver anime</h1>
+    <p>Selecciona un episodio para reproducirlo.</p>
+
+    <select id="episodes">
+      <option value="">Selecciona un episodio</option>
+      <option value="demo">Video de prueba</option>
+    </select>
+
+    <video id="player" controls playsinline></video>
+    <p id="status">Selecciona un video para comenzar.</p>
+  </main>
+
+  <script>
+    const player = document.getElementById("player");
+    const episodes = document.getElementById("episodes");
+    const status = document.getElementById("status");
+
+    // Sustituye esta URL por la de un video
+    // propio o autorizado para reproducirse aquí.
+    const videos = {
+      demo: "PEGA_AQUI_LA_URL_DIRECTA_DEL_VIDEO.mp4"
+    };
+
+    episodes.addEventListener("change", () => {
+      const url = videos[episodes.value];
+
+      if (!url) {
+        player.pause();
+        player.removeAttribute("src");
+        status.textContent = "Selecciona un video.";
+        return;
+      }
+
+      player.src = url;
+      player.load();
+      status.textContent = "Video cargado. Pulsa reproducir.";
+    });
+  </script>
+</body>
+</html>
