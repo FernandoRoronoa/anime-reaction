@@ -8,63 +8,86 @@
   <style>
     body {
       margin: 0;
-      background: #101014;
-      color: white;
+      background: #111116;
+      color: #fff;
       font-family: Arial, sans-serif;
     }
     header {
-      padding: 22px 5%;
-      background: #1b1b23;
+      padding: 18px 5%;
+      background: #1c1c25;
       border-bottom: 1px solid #333;
     }
     main {
-      max-width: 1000px;
-      margin: 35px auto;
-      padding: 0 20px;
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 20px;
     }
     video {
+      display: block;
       width: 100%;
-      background: black;
-      border-radius: 12px;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 10px;
     }
-    select {
+    select, button {
       padding: 12px;
+      border-radius: 7px;
+      border: 1px solid #444;
       background: #252530;
       color: white;
-      border-radius: 6px;
-      margin-bottom: 18px;
     }
-    p { color: #b6b6c5; }
+    .panel {
+      padding: 15px;
+      background: #1c1c25;
+      border-radius: 10px;
+    }
+    @media(max-width:700px) {
+      .layout { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h2>ANIME REACTION</h2>
+    <strong>ANIME REACTION</strong>
   </header>
 
   <main>
     <h1>Ver anime</h1>
-    <p>Selecciona un episodio para reproducirlo.</p>
+    <p>Selecciona un episodio para comenzar.</p>
 
-    <select id="episodes">
-      <option value="">Selecciona un episodio</option>
-      <option value="demo">Video de prueba</option>
-    </select>
+    <div class="layout">
+      <section>
+        <video id="player" controls playsinline></video>
+        <p id="status">Esperando selección.</p>
+      </section>
 
-    <video id="player" controls playsinline></video>
-    <p id="status">Selecciona un video para comenzar.</p>
+      <aside class="panel">
+        <h3>Episodios</h3>
+        <select id="episodes">
+          <option value="">Seleccionar episodio</option>
+          <option value="ep1">Episodio de prueba 1</option>
+          <option value="ep2">Episodio de prueba 2</option>
+        </select>
+        <p>Directo del streamer</p>
+        <p>Abre Twitch en otra pestaña para escuchar la reacción.</p>
+      </aside>
+    </div>
   </main>
 
   <script>
+    const videos = {
+      ep1: "URL_DE_VIDEO_AUTORIZADO_1.mp4",
+      ep2: "URL_DE_VIDEO_AUTORIZADO_2.mp4"
+    };
+
     const player = document.getElementById("player");
     const episodes = document.getElementById("episodes");
     const status = document.getElementById("status");
-
-    // Sustituye esta URL por la de un video
-    // propio o autorizado para reproducirse aquí.
-    const videos = {
-      demo: "PEGA_AQUI_LA_URL_DIRECTA_DEL_VIDEO.mp4"
-    };
 
     episodes.addEventListener("change", () => {
       const url = videos[episodes.value];
@@ -72,13 +95,13 @@
       if (!url) {
         player.pause();
         player.removeAttribute("src");
-        status.textContent = "Selecciona un video.";
+        status.textContent = "Selecciona un episodio.";
         return;
       }
 
       player.src = url;
       player.load();
-      status.textContent = "Video cargado. Pulsa reproducir.";
+      status.textContent = "Video listo para reproducir.";
     });
   </script>
 </body>
